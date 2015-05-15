@@ -1,22 +1,21 @@
 use 5.006;
 use strict;
-use warnings FATAL => 'all';
+use warnings;
 use ExtUtils::MakeMaker;
 
-my $DBIC_VERSION = '0.082820';
+my $MIN_DBIC_VERSION = '0.082820';
 
 my %EUMM_ARGS = (
-    NAME         => 'DBIx::Class::Schema::Versioned::Inline',
-    AUTHOR       => q{Peter Mottram (SysPete) <peter@sysnix.com>},
-    VERSION_FROM => 'lib/DBIx/Class/Schema/Versioned/Inline.pm',
-    ABSTRACT =>
-'Schema versioning for DBIx::Class with version information embedded inline in the schema definition.',
+    NAME               => 'DBIx::Class::MultiVersion',
+    AUTHOR             => q{Peter Mottram (SysPete) <peter@sysnix.com>},
+    VERSION_FROM       => 'lib/DBIx/Class/MultiVersion.pm',
+    ABSTRACT_FROM      => 'lib/DBIx/Class/MultiVersion.pm',
     LICENSE            => 'perl',
     PL_FILES           => {},
     MIN_PERL_VERSION   => 5.006,
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => 0,
-        'DBIx::Class'         => $DBIC_VERSION,
+        'DBIx::Class'         => $MIN_DBIC_VERSION,
     },
     BUILD_REQUIRES => {
         'Class::Load'                 => 0,
@@ -24,24 +23,24 @@ my %EUMM_ARGS = (
         'File::Spec'                  => '3.47',
         'Test::Deep'                  => 0,
         'Test::Exception'             => 0,
-        'Test::Roo'                   => '1.003',
-        'Test::Warnings'              => '0.012',
+        'Test::More'                  => 0,
     },
     PREREQ_PM => {
-        'DBIx::Class'        => $DBIC_VERSION,
+        'DBIx::Class'        => $MIN_DBIC_VERSION,
         'Moo'                => '2.000',
         'Try::Tiny'          => '0.18',
         'Type::Tiny'         => '1.000005',
         'Types::PerlVersion' => '0.002',
+        'Types::Set'         => '0.003',
     },
-    dist => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean      => { FILES => 'DBIx-Class-Schema-Versioned-Inline-*' },
+    dist       => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
+    clean      => { FILES    => 'DBIx-Class-MultiVersion-*' },
     META_MERGE => {
         resources => {
             repository =>
-'https://github.com/Sysnix/dbix-class-schema-versioned-inline.git',
+              'https://github.com/SysPete/DBIx-Class-MultiVersion.git',
             bugtracker =>
-'https://github.com/Sysnix/dbix-class-schema-versioned-inline/issues',
+              'https://github.com/SysPete/DBIx-Class-MultiVersion/issues',
             IRC => 'irc://irc.perl.org/#dbix-class',
         },
     },
@@ -69,3 +68,4 @@ $EUMM_ARGS{BUILD_REQUIRES} =
   { %DBIC_BUILD_REQUIRES, %{ $EUMM_ARGS{BUILD_REQUIRES} || {} }, };
 
 ExtUtils::MakeMaker::WriteMakefile(%EUMM_ARGS);
+
